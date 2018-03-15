@@ -8,15 +8,16 @@ RUN apt-get update -y && \
 	apt-get update -y && \
 	apt-get install -y --no-install-recommends \
 	build-essential \
-	python3.5 python-dev python-pip \
+	python3.5 \
 	ffmpeg \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY files /root/
 
-RUN mkdir /videos
-RUN mkdir /workspace
-RUN cd /root/filegen && make && ./generate_video_files_and_logs.sh /videos /root/VideoSet
-RUN rmdir /workspace
-RUN rm -rf /root/VideoSet
+ADD bootstrap.sh /root/bootstrap.sh
+RUN chown root:root /root/bootstrap.sh
+RUN chmod 700 /root/bootstrap.sh
+
 VOLUME ["/videos"]
+
+ENTRYPOINT ["/root/bootstrap.sh"]
