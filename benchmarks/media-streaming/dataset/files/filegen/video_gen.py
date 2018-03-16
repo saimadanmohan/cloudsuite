@@ -7,7 +7,6 @@ from random import randint
 video_io_filenames ={}
 config_param_path = None
 video_file_info_path = None
-workspace_dir = None
 textpaths_dir = None
 output_videos_dir = None
 file_resolution_info = None
@@ -81,18 +80,17 @@ def parse_videos_info(resolution,videos_path):
 if __name__ == '__main__':
     myargs = getopts(argv)
 
-    if '-p' not in myargs or '-w' not in myargs or '-v' not in myargs or '-s' not in myargs or '-o' not in myargs:
+    if '-p' not in myargs or '-v' not in myargs or '-s' not in myargs or '-o' not in myargs:
         raise ValueError('Please provide a valid config files.')
         exit(1)
     else:
-        workspace_dir = myargs["-w"]
         file_resolution_info = myargs["-p"]
         video_file_info_path = myargs["-v"]
         videos_path = myargs["-s"]
         output_videos_dir = myargs["-o"]
 
 
-    textpaths_dir = workspace_dir+"/textpaths/"
+    textpaths_dir = "/tmp/textpaths/"
 
     resolution = get_resolution()
     if resolution is None:
@@ -103,7 +101,7 @@ if __name__ == '__main__':
 
     video_request_dict = get_video_info()
     for key in video_request_dict:
-        output_video_name = "input_video_"+resolution+"_"+key+".mp4"
+        output_video_name = "full-"+resolution+"-"+key+".mp4"
         requested_video_size_in_bytes = video_request_dict[key]
         rand_vid_index = randint(0,len(input_video_collection)-1)
         local_file_path = input_video_collection[rand_vid_index]            
