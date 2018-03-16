@@ -29,8 +29,8 @@ for paramfile in params/*; do
 			multiplication_factor=`expr 500 \* $LIBRARY_SIZE`
 		fi
 	
-		new_size=`expr $multiplication_factor / 151`
-		new_size=`expr $new_size + 1`
+		new_size=$[$multiplication_factor / 151]
+		new_size=$[$new_size + 1]
 		sed -i "s/$test_seq=$old_size/$test_seq=$new_size/g" $filename
 	
 	fi
