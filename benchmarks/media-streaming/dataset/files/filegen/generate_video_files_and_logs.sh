@@ -5,7 +5,8 @@ VIDEO_SET=$2
 LIBRARY_SIZE=$3
 
 mkdir -p "$VIDEOS_DIR/logs"
-
+touch "$VIDEOS_DIR/test_videos.js"
+chmod 700 "$VIDEOS_DIR/test_videos.js"
 for paramfile in params/*; do
 	mkdir /tmp/textpaths
 	cp "$paramfile" filegen_param.conf

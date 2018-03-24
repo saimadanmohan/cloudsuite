@@ -11,7 +11,7 @@ textpaths_dir = None
 output_videos_dir = None
 file_resolution_info = None
 videos_path = None
-
+videos_js_path = None
 def bytes_to_MB(number_of_bytes):
     factor = 1024*1024
     number_of_bytes = float(number_of_bytes)
@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
 
     textpaths_dir = "/tmp/textpaths/"
-
+    videos_js_path = output_videos_dir+"/"+"test_videos.js"
     resolution = get_resolution()
     if resolution is None:
         raise ValueError('Please provide a valid config param file.')
@@ -100,12 +100,17 @@ if __name__ == '__main__':
     input_video_collection = parse_videos_info(resolution,videos_path)
 
     video_request_dict = get_video_info()
+    videos_js_file = open(videos_js_path,"a+")
+    videos_list_in_js = ""
+    
     for key in video_request_dict:
         output_video_name = "full-"+resolution+"-"+key+".mp4"
         requested_video_size_in_bytes = video_request_dict[key]
         rand_vid_index = randint(0,len(input_video_collection)-1)
         local_file_path = input_video_collection[rand_vid_index]            
         generate_video_file_with_requested_size(requested_video_size_in_bytes,local_file_path,resolution,output_video_name)
+        videos_list_in_js = videos_list_in_js+'"'+output_video_name+'",'
+    videos_js_file.write("var videos"+resolution+" = [" +videos_list_in_js[:-1]+"]\n")
 
 
 # Execute ffmpeg to concatenate these input videos to get output videos of required sizes
