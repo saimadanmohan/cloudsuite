@@ -11,7 +11,7 @@ function populateVideosList(selectedList) {
 }
 
 $(document).ready(function() {
-    $.getScript("/videos/test_videos.js")
+    $.getScript("/test_videos.js")
         .done(function(script, textStatus) {
             console.log(textStatus);
 
@@ -57,7 +57,7 @@ function changeVideo(videoSource, type) {
 $('#videolist').on('change', function() {
     var optVal = $("#videolist option:selected").val();
     type = "video/mp4"
-    optVal = "/videos/" + optVal
+    optVal = "/" + optVal
     console.log(optVal)
     changeVideo(optVal, type)
 })
